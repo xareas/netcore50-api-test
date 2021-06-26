@@ -25,8 +25,8 @@ pipeline {
         }
         stage('Deploy Dev') {
             steps {
-                bat(script: 'az login --service-principal --username 60445a5a-4c7d-404e-96a0-0d5c83c4978f --password wP_yGAcZKPUZQBTd.ezSLAzpNAzY-ZcZ6l --tenant 74343d69-5375-4c7a-8cc9-08986488c964', returnStdout: true);
-                bat(script: 'az account set --subscription "StywarV"', returnStdout: true);
+                bat(script: 'az login --service-principal --username 60445a5a-4c7d-404e-96a0-0d5c83c4978f --password IjQDEixv1GjhNGl~_5Oo6NzEBJhTBEl0oE --tenant 74343d69-5375-4c7a-8cc9-08986488c964', returnStdout: true);
+                bat(script: 'az account set --subscription "Developer"', returnStdout: true);
                 bat(script: 'az container restart --name micro5testservice --resource-group aforo255Devops', returnStdout: true);
                 //bat(script: 'az container delete --resource-group aforo255Devops --name micro5testservice --yes', returnStdout: true);
                 //bat(script: 'az container create --resource-group aforo255Devops --name micro5testservice --image antony0618/servicenet5:latest --dns-name-label micro5testservice --ports 80', returnStdout: true);
