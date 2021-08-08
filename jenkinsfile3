@@ -8,11 +8,11 @@ node {
         stage('Build') {
             dotnet_build();
         }
-        //stage('Docker') {
-            //  bat(script: 'docker login --username %UsernameDockerHub% --password %PasswordDocker%', returnStdout: true);
-          //    bat(script: 'docker build -t antony0618/servicenet5 .', returnStdout: true);
-           //   bat(script: 'docker push antony0618/servicenet5', returnStdout: true);            
-       // }
+        stage('Docker') {
+              bat(script: 'docker login --username %UsernameDockerHub% --password %PasswordDocker%', returnStdout: true);
+              bat(script: 'docker build -t antony0618/servicenet5 .', returnStdout: true);
+              bat(script: 'docker push antony0618/servicenet5', returnStdout: true);            
+        }
         stage('Deploy Dev') {
             steps {
                 bat(script: 'az login --service-principal --username 60445a5a-4c7d-404e-96a0-0d5c83c4978f --password gYzCJPIGkmt15~jrrXw7A8o4iHWD1f~B6Q --tenant 74343d69-5375-4c7a-8cc9-08986488c964', returnStdout: true);
