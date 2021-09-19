@@ -9,14 +9,14 @@ node {
             dotnet_build();
         }
         stage('Docker') {
-              bat(script: 'docker login --username %UsernameDockerHub% --password %PasswordDocker%', returnStdout: true);
+             // bat(script: 'docker login --username %UsernameDockerHub% --password %PasswordDocker%', returnStdout: true);
               bat(script: 'docker build -t antony0618/servicenet5 .', returnStdout: true);
               bat(script: 'docker push antony0618/servicenet5', returnStdout: true);            
         }
         stage('Deploy Dev') {
             steps {
-                bat(script: 'az login --service-principal --username 60445a5a-4c7d-404e-96a0-0d5c83c4978f --password gYzCJPIGkmt15~jrrXw7A8o4iHWD1f~B6Q --tenant 74343d69-5375-4c7a-8cc9-08986488c964', returnStdout: true);
-                bat(script: 'az account set --subscription "Developer"', returnStdout: true);
+                bat(script: 'az login --service-principal --username 2f514113-c8ab-4185-9c4e-de9e6c887e36 --password 05iB35_E0~xFvZA5XMUjMAYwkZoRDnilOh --tenant 74343d69-5375-4c7a-8cc9-08986488c964', returnStdout: true);
+                bat(script: 'az account set --subscription  a29dad22-fa1e-4b41-ace0-4159a70e3816', returnStdout: true);
                 bat(script: 'az container restart --name micro5testservice --resource-group Devops', returnStdout: true);
                 //bat(script: 'az container delete --resource-group aforo255Devops --name micro5testservice --yes', returnStdout: true);
                 //bat(script: 'az container create --resource-group aforo255Devops --name micro5testservice --image antony0618/servicenet5:latest --dns-name-label micro5testservice --ports 80', returnStdout: true);
@@ -24,9 +24,9 @@ node {
         }
         stage('Deploy AKS') {
             steps {
-                //bat(script: 'az aks get-credentials --resource-group aforo255Devops --name aforo255jenkins & kubectl config get-contexts --kubeconfig=%KUBE_PATH_CONFIG%', returnStdout: true);
-                bat(script: 'az aks get-credentials --resource-group Devops --name k8s-julio-jenkins & kubectl config get-contexts --kubeconfig=%KUBE_PATH_CONFIG%', returnStdout: true);
-                bat(script: 'kubectl config use-context k8s-julio-jenkins --kubeconfig=%KUBE_PATH_CONFIG%', returnStdout: true);
+               //bat(script: 'az aks get-credentials --resource-group aforo255Devops --name aforo255jenkins & kubectl config get-contexts --kubeconfig=%KUBE_PATH_CONFIG%', returnStdout: true);
+                bat(script: 'az aks get-credentials --resource-group  Devops  --name cluster-devops & kubectl config get-contexts --kubeconfig=%KUBE_PATH_CONFIG%', returnStdout: true);
+                bat(script: 'kubectl config use-context cluster-devops --kubeconfig=%KUBE_PATH_CONFIG%', returnStdout: true);
                 bat(script: 'Kubectl delete --all pods --kubeconfig=%KUBE_PATH_CONFIG% & kubectl apply -f k8s.yml --kubeconfig=%KUBE_PATH_CONFIG%', returnStdout: true);
             }
         }    
